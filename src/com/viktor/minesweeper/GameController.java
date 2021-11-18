@@ -31,6 +31,8 @@ public class GameController {
     public GameController(GraphicsContext gc, Stage primaryStage) {
         this.gc = gc;
         this.primaryStage = primaryStage;
+        drawCanvas();
+        placeRandomBomb();
     }
 
     public void handleClick(MouseEvent event) {
@@ -59,8 +61,8 @@ public class GameController {
         }
         block.setOpen(true);
         renderBlock(block);
-        int bombNearby=bombNearby(block);
-        if (bombNearby>0) {
+        int bombNearby = bombNearby(block);
+        if (bombNearby > 0) {
             block.setNumber(bombNearby);
             renderBlock(block);
             return;
@@ -89,13 +91,13 @@ public class GameController {
             gc.setFill(Color.BLACK);
             gc.setFont(new Font("Verdana", 20));
             gc.setTextAlign(TextAlignment.CENTER);
-            gc.fillText(String.valueOf(block.getNumber()), block.getX() * SQUARE_SIZE+SQUARE_SIZE/2, block.getY() * SQUARE_SIZE+SQUARE_SIZE/2);
+            gc.fillText(String.valueOf(block.getNumber()), block.getX() * SQUARE_SIZE + SQUARE_SIZE / 2, block.getY() * SQUARE_SIZE + SQUARE_SIZE / 2);
         }
 
     }
 
     private int bombNearby(Block block) {
-        int count=0;
+        int count = 0;
         for (Block bomb : bombList) {
             int x = bomb.getX() - block.getX();
             boolean isX = x >= -1 && x <= 1;
@@ -114,36 +116,36 @@ public class GameController {
         endGame(alert);
     }
 
-    private void endGame(Alert alert){
+    private void endGame(Alert alert) {
         Optional<ButtonType> result = alert.showAndWait();
         if (!result.isPresent() || result.get() == ButtonType.OK) {
             new Main().start(primaryStage);
         }
     }
 
-    private void winGame(){
-        boolean win=true;
-        for(Block block:blockList){
-            if(!block.isBomb() && !block.isOpen()){
-                win=false;
+    private void winGame() {
+        boolean win = true;
+        for (Block block : blockList) {
+            if (!block.isBomb() && !block.isOpen()) {
+                win = false;
             }
         }
-        if(win){
+        if (win) {
             Alert alert = CustomAlert.createCustomAlert("Kraj igre", "Pobedili ste ste");
             endGame(alert);
         }
     }
 
 
-
-
-    private void placeRandomBomb(Block block) {
-        int randomNum = new Random().nextInt((11 - 1) + 1) + 1;
-        if (placedBombs < bombSize) {
-            if (randomNum < 3) {
+    private void placeRandomBomb() {
+        for(int i=0;i< bombSize;){
+            int randomNum = new Random().nextInt(blockList.size() - 1);
+            Block block=blockList.get(randomNum);
+            if(!block.isBomb()){
                 block.setBomb(true);
                 placedBombs++;
                 bombList.add(block);
+                i++;
             }
         }
     }
@@ -192,7 +194,6 @@ public class GameController {
                 }
                 gc.fillRect(i * SQUARE_SIZE, j * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE);
                 Block block = Block.forStart(i, j);
-                placeRandomBomb(block);
                 blockList.add(block);
             }
         }

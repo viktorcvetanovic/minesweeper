@@ -26,7 +26,6 @@ public class Main extends Application {
         primaryStage.show();
         primaryStage.getIcons().add(new Image("assets/flag.png"));
         GameController gameController = new GameController(gc,primaryStage);
-        gameController.drawCanvas();
         scene.setOnMousePressed(gameController::handleClick);
     }
 
