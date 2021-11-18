@@ -1,0 +1,9 @@
+
+M
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8†ÏÅÌÑ/
+M
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8†ÏÅÌÑ/
+p
+java:S3008"URename this field "MAX_NUMBER" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ãÕšªúÿÿÿÿ
+I
+java:S1068".Remove this unused "MAX_NUMBER" private field.(ãÕšªúÿÿÿÿ
